@@ -1,0 +1,22 @@
+amends "package://components.emilym.cl/actions/actions@0.1.14#/render.pkl"
+import "package://components.emilym.cl/actions/actions@0.1.14#/common/target.pkl" as target
+
+_modules = new Listing {
+    "mediacontrol"
+}
+workflows = new Listing {
+    (import("package://components.emilym.cl/actions/actions@0.1.14#/build-kmp-lib.pkl")) {
+        targets = new Listing {
+            target.buildIosMultiplatformTarget("mediacontrol", "x64")
+            target.buildIosMultiplatformTarget("mediacontrol", "arm64")
+            target.buildIosMultiplatformTarget("mediacontrol", "simulatorArm64")
+            target.buildDarwinMultiplatformTarget("mediacontrol", "macos", "x64")
+            target.buildDarwinMultiplatformTarget("mediacontrol", "macos", "arm64")
+            target.buildAndroidMultiplatformTarget("mediacontrol")
+            target.buildJvmMultiplatformTarget("mediacontrol")
+            target.buildWasmJsMultiplatformTarget("mediacontrol")
+            target.buildJsMultiplatformTarget("mediacontrol")
+        }
+    }
+    import("package://components.emilym.cl/actions/actions@0.1.14#/lint.pkl")
+}
