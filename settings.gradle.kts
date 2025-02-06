@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AudioControls"
+rootProject.name = "MediaControlLib"
 include(":app")
-include(":audiocontrol")
+include(":mediacontrol")

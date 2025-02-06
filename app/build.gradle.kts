@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "cl.emilym.compose.audiocontrols"
+    namespace = "cl.emilym.compose.mediacontrol"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "cl.emilym.compose.audiocontrols"
+        applicationId = "cl.emilym.compose.mediacontrol"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -40,8 +40,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":audiocontrol"))
 
+    implementation(project(":mediacontrol"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
