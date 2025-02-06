@@ -48,6 +48,18 @@ jobs:
     strategy:
       matrix:
         configuration:
+        - command: :mediacontrol:linkPodReleaseFrameworkIosX64
+          os: macos-latest
+          output0:
+            key: mediacontrol-iosX64-framework
+            name: mediacontrol-iosX64.framework
+            location: ./mediacontrol/build/bin/iosX64/podReleaseFramework/mediacontrol.framework
+            needsZip: true
+          output1:
+            key: mediacontrol-iosX64-klib
+            name: mediacontrol-iosX64.klib
+            location: ./mediacontrol/build/classes/kotlin/iosX64/main/klib/mediacontrol.klib
+            needsZip: false
         - command: :mediacontrol:linkPodReleaseFrameworkIosArm64
           os: macos-latest
           output0:
@@ -72,17 +84,29 @@ jobs:
             name: mediacontrol-iosSimulatorArm64.klib
             location: ./mediacontrol/build/classes/kotlin/iosSimulatorArm64/main/klib/mediacontrol.klib
             needsZip: false
-        - command: :mediacontrol:linkPodReleaseFrameworkIosX64
+        - command: :mediacontrol:linkPodReleaseFrameworkMacosX64
           os: macos-latest
           output0:
-            key: mediacontrol-iosX64-framework
-            name: mediacontrol-iosX64.framework
-            location: ./mediacontrol/build/bin/iosX64/podReleaseFramework/mediacontrol.framework
+            key: mediacontrol-macosX64-framework
+            name: mediacontrol-macosX64.framework
+            location: ./mediacontrol/build/bin/macosX64/podReleaseFramework/mediacontrol.framework
             needsZip: true
           output1:
-            key: mediacontrol-iosX64-klib
-            name: mediacontrol-iosX64.klib
-            location: ./mediacontrol/build/classes/kotlin/iosX64/main/klib/mediacontrol.klib
+            key: mediacontrol-macosX64-klib
+            name: mediacontrol-macosX64.klib
+            location: ./mediacontrol/build/classes/kotlin/macosX64/main/klib/mediacontrol.klib
+            needsZip: false
+        - command: :mediacontrol:linkPodReleaseFrameworkMacosArm64
+          os: macos-latest
+          output0:
+            key: mediacontrol-macosArm64-framework
+            name: mediacontrol-macosArm64.framework
+            location: ./mediacontrol/build/bin/macosArm64/podReleaseFramework/mediacontrol.framework
+            needsZip: true
+          output1:
+            key: mediacontrol-macosArm64-klib
+            name: mediacontrol-macosArm64.klib
+            location: ./mediacontrol/build/classes/kotlin/macosArm64/main/klib/mediacontrol.klib
             needsZip: false
         - command: :mediacontrol:assembleRelease
           os: ubuntu-latest
@@ -90,6 +114,27 @@ jobs:
             key: mediacontrol-android-aar
             name: mediacontrol-android.aar
             location: ./mediacontrol/build/outputs/aar/mediacontrol-release.aar
+            needsZip: false
+        - command: :mediacontrol:jvmJar
+          os: ubuntu-latest
+          output0:
+            key: mediacontrol-jvm-jar
+            name: mediacontrol-jvm.jar
+            location: ./mediacontrol/build/libs/mediacontrol-jvm-${{ needs.version.outputs.version }}.jar
+            needsZip: false
+        - command: :mediacontrol:wasmJsJar
+          os: ubuntu-latest
+          output0:
+            key: mediacontrol-wasm-js-klib
+            name: mediacontrol-wasm-js.klib
+            location: ./mediacontrol/build/libs/mediacontrol-wasm-js-${{ needs.version.outputs.version }}.klib
+            needsZip: false
+        - command: :mediacontrol:jsJar
+          os: ubuntu-latest
+          output0:
+            key: mediacontrol-js-klib
+            name: mediacontrol-js.klib
+            location: ./mediacontrol/build/libs/mediacontrol-js-${{ needs.version.outputs.version }}.klib
             needsZip: false
     steps:
     - uses: actions/checkout@v4
@@ -165,6 +210,12 @@ jobs:
     strategy:
       matrix:
         artifact:
+        - key: mediacontrol-iosX64-framework
+          name: mediacontrol-iosX64.framework.zip
+          mimeType: application/zip
+        - key: mediacontrol-iosX64-klib
+          name: mediacontrol-iosX64.klib
+          mimeType: application/zip
         - key: mediacontrol-iosArm64-framework
           name: mediacontrol-iosArm64.framework.zip
           mimeType: application/zip
@@ -177,14 +228,29 @@ jobs:
         - key: mediacontrol-iosSimulatorArm64-klib
           name: mediacontrol-iosSimulatorArm64.klib
           mimeType: application/zip
-        - key: mediacontrol-iosX64-framework
-          name: mediacontrol-iosX64.framework.zip
+        - key: mediacontrol-macosX64-framework
+          name: mediacontrol-macosX64.framework.zip
           mimeType: application/zip
-        - key: mediacontrol-iosX64-klib
-          name: mediacontrol-iosX64.klib
+        - key: mediacontrol-macosX64-klib
+          name: mediacontrol-macosX64.klib
+          mimeType: application/zip
+        - key: mediacontrol-macosArm64-framework
+          name: mediacontrol-macosArm64.framework.zip
+          mimeType: application/zip
+        - key: mediacontrol-macosArm64-klib
+          name: mediacontrol-macosArm64.klib
           mimeType: application/zip
         - key: mediacontrol-android-aar
           name: mediacontrol-android.aar
+          mimeType: application/zip
+        - key: mediacontrol-jvm-jar
+          name: mediacontrol-jvm.jar
+          mimeType: application/zip
+        - key: mediacontrol-wasm-js-klib
+          name: mediacontrol-wasm-js.klib
+          mimeType: application/zip
+        - key: mediacontrol-js-klib
+          name: mediacontrol-js.klib
           mimeType: application/zip
     steps:
     - uses: actions/download-artifact@v4
